@@ -1,3 +1,6 @@
+
+
+
 <?php
 // Load PHPMailer classes (adjust the paths as needed)
 require 'PHPMailer/src/Exception.php';
@@ -41,14 +44,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'your-email@gmail.com';  // Replace with your email
-        $mail->Password   = 'your-app-password';       // Replace with your Gmail app password
+        $mail->Username   = 'your-email@gmail.com';      // Replace with your email
+        $mail->Password   = 'your-app-password';           // Replace with your Gmail app password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
         // Recipients
         $mail->setFrom('your-email@gmail.com', 'Your Name');
-        $mail->addAddress('recipient-email@gmail.com', 'Recipient Name');
+
+        // Always send to admin
+        $mail->addAddress('your-email@gmail.com', 'Your Name');
+
+        // Also send a copy to the user's email (if it's not the same as admin)
+        if ($email !== 'your-email@gmail.com') {
+            $mail->addAddress($email);
+        }
 
         // Email content
         $mail->isHTML(false);
@@ -61,7 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
     }
 } else {
-    // If not a POST request, you can redirect or handle as needed
+    // If not a POST request, redirect to the form
     header('Location: contact.html');
     exit;
 }

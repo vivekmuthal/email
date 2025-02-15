@@ -1,16 +1,6 @@
 <?php
-// Enable CORS for debugging
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: POST, GET, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type");
-
-// Allow only POST requests
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    exit('405 Method Not Allowed');
-}
-
-// Load PHPMailer
+// Load PHPMailer if installed via Composer
+// require __DIR__ . '/vendor/autoload.php';
 require 'PHPMailer/src/Exception.php';
 require 'PHPMailer/src/PHPMailer.php';
 require 'PHPMailer/src/SMTP.php';
@@ -18,8 +8,9 @@ require 'PHPMailer/src/SMTP.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Check if form was submitted
-if (isset($_POST['submit'])) {
+
+// Only process POST requests
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name          = htmlspecialchars($_POST['name'] ?? '');
     $email         = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);
     $number        = htmlspecialchars($_POST['number'] ?? '');
@@ -52,8 +43,8 @@ if (isset($_POST['submit'])) {
         $mail->isSMTP();
         $mail->Host       = 'smtp.gmail.com';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'vivekmuthal07@gmail.com';  // Your email
-        $mail->Password   = 'kblc jrei jlfn olog';       // Your Gmail app password
+        $mail->Username   = 'vivekmuthal07@gmail.com';  // Replace with your email
+        $mail->Password   = 'kblc jrei jlfn olog';       // Replace with your Gmail app password
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
         $mail->Port       = 587;
 
@@ -73,3 +64,5 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
+
+

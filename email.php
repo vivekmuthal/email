@@ -10,7 +10,7 @@ use PHPMailer\PHPMailer\Exception;
 
 
 // Only process POST requests
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+if (isset($_POST['send'])) {
     $name          = htmlspecialchars($_POST['name'] ?? '');
     $email         = filter_var($_POST['email'] ?? '', FILTER_VALIDATE_EMAIL);
     $number        = htmlspecialchars($_POST['number'] ?? '');

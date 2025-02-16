@@ -6,10 +6,10 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require 'vendor/autoload.php'; // If using Composer
-// require 'PHPMailer/src/PHPMailer.php'; // If using manual method
-// require 'PHPMailer/src/SMTP.php';
-// require 'PHPMailer/src/Exception.php';
+// require 'vendor/autoload.php'; // If using Composer
+require 'PHPMailer/src/PHPMailer.php'; // If using manual method
+require 'PHPMailer/src/SMTP.php';
+require 'PHPMailer/src/Exception.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
